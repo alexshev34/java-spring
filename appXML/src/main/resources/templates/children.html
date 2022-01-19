@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"a >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/popper/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>   </head>
+<body>
+<th:block th:include="/menu"></th:block>
+<div class="container">
+
+    <div class="row justify-content-center align-items-center">
+        <div class="col-6">
+            <h4>Список детей </h4>
+        </div>
+
+    </div>
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                <th>
+                    Логин
+                </th>
+                <th>
+                    Фамилия, Имя,Возраст
+                </th>
+
+                <th>
+                    Родители, адрес
+                </th>
+
+                <th>
+                    Учебное заведение
+                </th>
+                </thead>
+                <tbody>
+                <tr th:each="child :${children}">
+                    <td>
+                        <span th:text="${child.login}"/>
+                    </td>
+                    <td>
+                        <span th:text="${child.lastName+' '+child.firstName+', '+child.age+ ' (лет)'}"></span>
+                    </td>
+                    <td>
+                        <ul>
+                            <th:block th:each="parent :${child.parents}">
+                                <li>
+                                    <span th:text="${parent.lastName+' '+parent.firstName}"></span>
+                                    <br>
+                                    <span th:text="${parent.address}"></span>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </td>
+                    <td>
+                        <span th:text="${child.educationalInstitution}"></span>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

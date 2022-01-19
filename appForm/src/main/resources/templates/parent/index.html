@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" a>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/font-awesome/css/all.css}"
+          rel="stylesheet"/>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/popper/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<th:block th:include="/menu"></th:block>
+<div class="container">
+    <div class="row justify-content-center align-items-center g-3 mt-3 alert alert-danger"
+         th:if="${errorMessage!=null}">
+        <span th:text="${errorMessage}"></span>
+    </div>
+    <form class="row justify-content-center align-items-center g-3 mt-3" method="post" th:action="@{/parent}"
+          th:object="${parentForm}">
+        <div class="col-1">
+            <input type="hidden" name="login" th:field="*{login}">
+            <label for="address" class="form-label">Адрес</label>
+        </div>
+        <div class="col-9">
+            <select class="form-control" name="address" id="address" th:field="*{address}"
+                    th:value="${address}">
+                <th:block th:each="region :${regions}">
+                    <optgroup th:label="${region.name}">
+                        <option th:each="add :${region.addresses}"
+                                th:text="${add.street+', '+add.house}"
+                                th:value="${add.id}"
+                                th:selected="${add.id==address}">
+                        </option>
+                    </optgroup>
+                </th:block>
+            </select>
+        </div>
+        <div class="col-1">
+            <input class="btn btn-danger" type="submit" value="Обновить"/>
+        </div>
+    </form>
+    <div class="row justify-content-center align-items-center mt-3">
+        <div class="col-12">
+            <h4>Список детей</h4>
+        </div>
+    </div>
+    <div class="row justify-content-center align-items-center">
+
+    </div>
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                <th>
+                    Логин
+                </th>
+                <th>
+                    Фамилия, Имя, возраст
+                </th>
+                <th>
+                    Учебное заведение
+                </th>
+                <th width="100px"></th>
+                </thead>
+                <tbody>
+                <tr th:each="child :${parent.children}">
+                    <td>
+                        <span th:text="${child.login}"/>
+                    </td>
+                    <td>
+                        <span th:text="${child.lastName+' '+child.firstName+', '+child.age+' (лет)'}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${child.educationalInstitution}"></span>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-6">
+                                <a th:href="@{/parent/child/{login}(login=${child.login})}"
+                                   class="btn btn-primary  btn-labeled"
+                                   role="button" aria-pressed="true"><span class="btn-label"><i class="fas fa-edit"></i></span></a>
+                            </div>
+                            <div class="col-6">
+                                <form th:action="@{/parent/child/del/{login}(login=${child.login})}" method="post">
+                                    <button type="submit" class="btn btn-danger  btn-labeled">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <a href="/parent/add/child" class="btn btn-danger" role="button" aria-pressed="true">Добавить</a>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

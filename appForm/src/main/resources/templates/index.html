@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/popper/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>   </head>
+<body>
+<th:block th:include="/menu"></th:block>
+
+<div class="container">
+
+    <div class="row justify-content-center align-items-center">
+        <div class="col-6">
+            <h4>Справочник регионов и адресов</h4>
+        </div>
+
+    </div>
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                <th>
+                    Район
+                </th>
+                <th>
+                    Адреса
+                </th>
+                <th>
+                    Учебные заведения
+                </th>
+                </thead>
+                <tbody>
+                <tr th:each="region :${regions}">
+                    <td>
+                        <span th:text="${region.key}"></span>
+                    </td>
+                    <td>
+                        <ul>
+                            <th:block th:each="address :${region.value[0]}">
+                                <li>
+                                    <span th:text="${address}"></span>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <th:block th:each="education :${region.value[1]}">
+                                <li>
+                                    <span th:text="${education}"></span>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

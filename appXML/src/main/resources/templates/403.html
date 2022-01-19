@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/popper/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>   </head>
+<body>
+<th:block th:include="/menu"></th:block>
+
+<div class="container">
+
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12 ">
+            <h4>Доступ запрещен!</h4>
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
